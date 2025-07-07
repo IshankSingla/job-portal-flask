@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">{{ job.title }}</h3>
+    <h6 class="card-subtitle mb-2 text-muted">{{ job.company }} – {{ job.location }}</h6>
+    <p class="card-text">{{ job.description }}</p>
+    <p><strong>Salary:</strong> ₹{{ job.salary }}</p>
+  </div>
+</div>
+
+<hr class="my-4">
+
+<h4>Apply for this job</h4>
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">
+    {{ form.message.label(class="form-label") }}
+    {{ form.message(class="form-control", rows="4") }}
+  </div>
+  <button type="submit" class="btn btn-success">Submit Application</button>
+</form>
+
+{% endblock %}
