@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Job Listings</h2>
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <input type="text" name="keyword" class="form-control" placeholder="Search by Title" value="{{ request.args.get('keyword', '') }}">
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="location" class="form-control" placeholder="Location" value="{{ request.args.get('location', '') }}">
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="company" class="form-control" placeholder="Company" value="{{ request.args.get('company', '') }}">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
+{% for job in jobs %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ job.title }}</h5>
+        <p class="card-text"><strong>Location:</strong> {{ job.location }} | <strong>Company:</strong> {{ job.company }}</p>
+        <p class="card-text">{{ job.description }}</p>
+        {% if job.id in applied_jobs %}
+            <button class="btn btn-secondary" disabled>Applied</button>
+        {% else %}
+            <a href="{{ url_for('apply', job_id=job.id) }}" class="btn btn-success">Apply</a>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+    <p>No jobs found.</p>
+{% endfor %}
+{% endblock %}
